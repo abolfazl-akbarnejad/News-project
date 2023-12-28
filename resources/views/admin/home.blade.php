@@ -1,4 +1,7 @@
 @extends('admin.layout.master')
+@section('style')
+    <title>خانه</title>
+@endsection
 @section('content')
     <div class="nk-content nk-content-fluid">
         <div class="container-xl wide-xl">

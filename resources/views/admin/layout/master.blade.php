@@ -4,7 +4,6 @@
 <head>
     {{-- head tag --}}
     @include('admin.layout.head_tag')
-    <title>داشبورد - کمپین | قالب مدیریتی دش‌لایت</title>
     @yield('style')
 
 </head>

@@ -24,22 +24,22 @@
                     </li>
                     <!-- .nk-menu-item -->
                     <li class="nk-menu-item">
-                        <a href="./copywriter/index.html" class="nk-menu-link">
+                        <a href="{{ route('admin.home') }}" class="nk-menu-link">
                             <span class="nk-menu-icon">
                                 <em class="icon ni ni-bag"></em>
                             </span>
-                            <span class="nk-menu-text">کپی رایتر هوش مصنوعی</span><span class="nk-menu-badge">داغ</span>
+                            <span class="nk-menu-text">خانه</span>
                         </a>
                     </li>
                     <!-- .nk-menu-item -->
                     <li class="nk-menu-heading">
-                        <h6 class="overline-title text-primary-alt">داشبوردها</h6>
+                        <h6 class="overline-title text-primary-alt">چیدمان ها</h6>
                     </li>
                     <!-- .nk-menu-item -->
                     <li class="nk-menu-item">
-                        <a href="./index.html" class="nk-menu-link">
+                        <a href="{{ route('admin.menu.index') }}" class="nk-menu-link">
                             <span class="nk-menu-icon"><em class="icon ni ni-presentation"></em></span>
-                            <span class="nk-menu-text">داشبورد پیش فرض</span>
+                            <span class="nk-menu-text">منو ها</span>
                         </a>
                     </li>
                     <!-- .nk-menu-item -->
