@@ -61,9 +61,17 @@ class menuController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Menu $menu)
     {
-        //
+        $inputs = $request->all();
+        $inputs['parent_id']  = $request->parent_id == 'default_option' ? null : $request->parent_id;
+        $result = $menu->update($inputs);
+
+        if ($result) {
+            return redirect()->route('admin.menu.index')->with('success', 'منو  با موفقیت ویرایش شد');
+        } else {
+            return redirect()->route('admin.menu.index');
+        }
     }
 
     /**
