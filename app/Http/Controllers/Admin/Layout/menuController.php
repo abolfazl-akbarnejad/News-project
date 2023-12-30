@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Layout;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Layout\MenuRequest;
 use App\Models\Menu;
 use Illuminate\Http\Request;
 
@@ -21,12 +22,21 @@ class menuController extends Controller
 
 
     /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        $menus  = Menu::where('parent_id', null)->get();
+        return view('admin.menu.create', compact('menus'));
+    }
+
+    /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(MenuRequest $request)
     {
         $inputs = $request->all();
-        $inputs['parent_id']  = $request->parent_id == 'default_option' ? null : $request->parent_id;
+        $inputs['parent_id']  = $request->parent_id == 'defult_option' ? null : $request->parent_id;
 
         $result = Menu::create($inputs);
         if ($result) {
@@ -44,24 +54,21 @@ class menuController extends Controller
         //
     }
 
+
+
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(Menu $menu)
     {
-
-        $parents = Menu::where('parent_id', null)->get();
-        return response()->json([
-            'status_response' => true,
-            'data' => $menu,
-            'parents' => $parents,
-        ]);
+        $menus = Menu::where('parent_id', null)->get();
+        return view('admin.menu.edit', compact('menu', 'menus'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Menu $menu)
+    public function update(MenuRequest $request, Menu $menu)
     {
         $inputs = $request->all();
         $inputs['parent_id']  = $request->parent_id == 'default_option' ? null : $request->parent_id;

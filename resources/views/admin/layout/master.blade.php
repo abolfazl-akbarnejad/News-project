@@ -29,7 +29,7 @@
                         <div class="nk-footer-wrap">
                             <div class="nk-footer-copyright">© تمام حقوق محفوظ است. فارسی و راستچین سازی شده توسط <a
                                     target="_blank" rel="nofollow"
-                                    href="https://www.rtl-theme.com/author/farshid_tarnian">فرشید ترنیان</a></div>
+                                    href="#">فرشید ترنیان</a></div>
 
                         </div>
                     </div>
