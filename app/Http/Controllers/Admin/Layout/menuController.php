@@ -86,7 +86,6 @@ class menuController extends Controller
      */
     public function destroy(Menu $menu)
     {
-        // dd($menu);
         $result = $menu->delete();
         if ($result) {
             return redirect()->route('admin.menu.index')->with('success', 'اطلاعات با موفقیت حذف شد');

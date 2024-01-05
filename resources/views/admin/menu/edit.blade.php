@@ -91,7 +91,6 @@
                                         <option value="{{ $parent_menu->id }}"
                                             @if (old('parent_id' , $menu->parent_id) == $parent_menu->id) selected @endif>
 
-
                                             {{ $parent_menu->name }}
                                         </option>
                                     @endforeach

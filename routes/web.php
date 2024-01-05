@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\HomeController;
+use App\Http\Controllers\Admin\Layout\BannerController;
 use App\Http\Controllers\Admin\Layout\menuController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,4 +27,13 @@ Route::prefix('admin')->group(function () {
     Route::delete('/menu/delete/{menu}', [menuController::class, 'destroy'])->name('admin.menu.destroy');
     Route::get('/menu/edit/{menu}', [menuController::class, 'edit'])->name('admin.menu.edit');
     Route::put('/menu/update/{menu}', [menuController::class, 'update'])->name('admin.menu.update');
+
+
+    //banner 
+    Route::get('/banner', [BannerController::class, 'index'])->name('admin.banner.index');
+    Route::get('/banner/create', [BannerController::class, 'create'])->name('admin.banner.create');
+    Route::post('/banner/store', [BannerController::class, 'store'])->name('admin.banner.store');
+    Route::delete('/banner/delete/{banner}', [BannerController::class, 'destroy'])->name('admin.banner.destroy');
+    Route::get('/banner/edit/{banner}', [BannerController::class, 'edit'])->name('admin.banner.edit');
+    Route::put('/banner/update/{banner}', [BannerController::class, 'update'])->name('admin.banner.update');
 });

@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('banners', function (Blueprint $table) {
             $table->id();
+            $table->text('file_show');
+            $table->string('file_type');
+            $table->timestamp('date_start');
+            $table->timestamp('date_end')->nullable();
+            $table->foreignId('priority_id')->constrained('priories_banner')->onDelete('cascade')->onUpdate('cascade');
+            $table->text('url');
             $table->timestamps();
         });
     }

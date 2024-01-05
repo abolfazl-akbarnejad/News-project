@@ -13,6 +13,14 @@ return new class extends Migration
     {
         Schema::create('invoice_banner', function (Blueprint $table) {
             $table->id();
+            $table->string('compani_name');
+            $table->integer('price');
+            $table->timestamp('date_start');
+            $table->timestamp('date_end')->nullable();
+            $table->tinyInteger('status')->comment('0 => unActive  , 1 => active ');
+            $table->tinyInteger('status_paid')->comment('0 => unPaid  , 1 => Paid ');
+            $table->text('url');
+            $table->foreignId('banner_id')->constrained('banners')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

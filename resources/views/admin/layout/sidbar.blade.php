@@ -44,9 +44,9 @@
                     </li>
                     <!-- .nk-menu-item -->
                     <li class="nk-menu-item">
-                        <a href="./index-sales.html" class="nk-menu-link">
+                        <a href="{{route('admin.banner.index')}}" class="nk-menu-link">
                             <span class="nk-menu-icon"><em class="icon ni ni-cc-alt2"></em></span>
-                            <span class="nk-menu-text">داشبورد فروش</span>
+                            <span class="nk-menu-text">بنر ها(تبلیغات)</span>
                         </a>
                     </li>
                     <!-- .nk-menu-item -->
