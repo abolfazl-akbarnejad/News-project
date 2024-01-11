@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('file_type');
             $table->timestamp('date_start');
             $table->timestamp('date_end')->nullable();
-            $table->foreignId('priority_id')->constrained('priories_banner')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('priority_id')->constrained('banner_priories')->onDelete('cascade')->onUpdate('cascade');
             $table->text('url');
             $table->timestamps();
         });

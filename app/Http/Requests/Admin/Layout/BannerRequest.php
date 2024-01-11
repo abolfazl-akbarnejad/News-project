@@ -23,20 +23,20 @@ class BannerRequest extends FormRequest
     {
         if ($this->isMethod('post')) {
             return [
-                'upload_file' => 'required|string|mimes:jpg,png , jpeg,gif,mp4,mov,flv',
+                'upload_file' => 'required|mimes:jpg,png,jpeg,gif,mp4,mov,flv',
                 'url' => 'required|string|url',
                 'date_start' => 'required',
                 'date_end' => 'required',
-                'priority_id' => 'required|numeric|exists:priorities,id',
+                'priority_id' => 'required|numeric|exists:banner_priories,id',
 
             ];
         } else {
             return [
-                'upload_file' => 'string|mimes:jpg,png , jpeg,gif,mp4,mov,flv',
+                'upload_file' => 'mimes:jpg,png , jpeg,gif,mp4,mov,flv',
                 'url' => 'required|string|url',
                 'date_start' => 'required',
                 'date_end' => 'required',
-                'priority_id' => 'required|numeric|exists:priories_banner,id',
+                'priority_id' => 'numeric|exists:banner_priories,id',
             ];
         }
     }

@@ -110,32 +110,3 @@
                     </form>
                 </div>
             @endsection
-            {{-- alerts --}}
-            @section('script')
-                @include('admin.alerts.defult_alert.suucess')
-
-
-                {{-- delete  --}}
-                <script>
-                    $(document).ready(function() {
-                        $(".deleteButton").click(function(e) {
-                            e.preventDefault();
-                            if (confirm("آیا مطمئن هستید که می‌خواهید این منو را حذف کنید؟")) {
-
-                                $(this).closest("form").submit();
-                            }
-                        });
-                    });
-                </script>
-
-
-                <script>
-                    $(window).ready(function() {
-                        $('.dropdown-menu').removeClass('*');
-
-                        $('.dropdown-menu').attr('class', 'dropdown-menu dropdown-menu-end');
-                        $('.dropdown-menu').attr('style',
-                            'dropdown-menu dropdown-menu-end');
-                    });
-                </script>
-            @endsection

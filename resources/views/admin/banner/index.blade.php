@@ -76,6 +76,7 @@
                     <thead>
                         <tr>
                             <th scope="col">#</th>
+                            <th scope="col">کد</th>
                             <th scope="col">نمایش تبلیغ</th>
                             <th scope="col">سطح اولویت / محل نمایش</th>
                             <th scope="col">تاریخ شروع</th>
@@ -87,10 +88,13 @@
                         @foreach ($banners as $key => $banner)
                             <tr>
                                 <th scope="row">{{ $key += 1 }}</th>
+                                <td>{{ $banner->id }}</td>
+
                                 <td>
                                     @if ($banner->file_type == 'image')
                                         <img src="{{ asset($banner->file_show) }}" width="{{ $banner->prioriry->width }}"
-                                            height="{{ $banner->prioriry->height }}" alt="" title="اندازه این عکس در زمان نمایش به همین ابعاد خواهد بود">
+                                            height="{{ $banner->prioriry->height }}" alt=""
+                                            title="اندازه این عکس در زمان نمایش به همین ابعاد خواهد بود">
                                     @else
                                         {{-- این فایل ویدیو است --}}
                                         <video width="320" height="240" autoplay loop muted>
@@ -98,8 +102,7 @@
                                         </video>
                                     @endif
                                 </td>
-                                {{-- <td>{{ $banner->file_type == 'image'?   asset($banner->file_show) :"این فایل ویدیو است"}}</td> --}}
-                                {{-- <td>{{}}</td> --}}
+
                                 <td>{{ $banner->prioriry->name }}</td>
                                 <td>{{ $banner->date_start }}</td>
                                 <td>{{ $banner->date_end }}</td>
@@ -125,9 +128,10 @@
                                                                             محصول</span></a>
                                                                 </li>
                                                                 <li>
-                                                                    <a href="#"><em
-                                                                            class="icon ni ni-eye"></em><span>مشاهده
-                                                                            محصول</span></a>
+                                                                    <a
+                                                                        href="{{ route('admin.banner.show', $banner->id) }}"><em
+                                                                            class="icon ni ni-eye"></em><span>جزئیات
+                                                                            بنر</span></a>
                                                                 </li>
                                                                 <li>
                                                                     <a href="#"><em
@@ -143,7 +147,7 @@
                                                                         @method('DELETE')
                                                                         <a href="#" class="deleteButton"><em
                                                                                 class="icon ni ni-trash"></em><span>حذف
-                                                                                منو</span></a>
+                                                                                بنر</span></a>
                                                                     </form>
                                                                 </li>
                                                             </ul>
@@ -170,7 +174,7 @@
                     $(document).ready(function() {
                         $(".deleteButton").click(function(e) {
                             e.preventDefault();
-                            if (confirm("آیا مطمئن هستید که می‌خواهید این منو را حذف کنید؟")) {
+                            if (confirm("آیا مطمئن هستید که می‌خواهید این بنر را حذف کنید؟")) {
 
                                 $(this).closest("form").submit();
                             }

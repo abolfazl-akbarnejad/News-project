@@ -1,6 +1,6 @@
 @extends('admin.layout.master')
 @section('style')
-    <title>ساخت منو جدید</title>
+    <title>ساخت بنر جدید</title>
     <link rel="stylesheet" href="{{ asset('admin_assets/jalalidatepicker/persian-datepicker.min.css') }}">
 @endsection
 @section('content')
@@ -10,15 +10,15 @@
                 <nav class="mb-3">
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">پنل مدیریت</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('admin.menu.index') }}">منو ها</a></li>
-                        <li class="breadcrumb-item active">ساخت منو جدید</li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.banner.create') }}">بنر ها</a></li>
+                        <li class="breadcrumb-item active">ساخت بنر جدید</li>
                     </ul>
                 </nav>
                 <div class="nk-block-head nk-block-head-sm">
 
                     <div class="nk-block-between">
                         <div class="nk-block-head-content">
-                            <h3 class="nk-block-title page-title">منو ها</h3>
+                            <h3 class="nk-block-title page-title">ساخت بنر</h3>
                         </div>
                         <!-- .nk-block-head-content -->
                         <div class="nk-block-head-content">
@@ -55,6 +55,7 @@
                                     accept=".jpg, .png, .jpeg, .gif , .mp4 , .mov , .flv" id="file_banner-01"
                                     placeholder="سلامت" value="{{ old('upload_file') }}">
                             </div>
+                            {{-- {{dd($errors)}} --}}
                             @error('upload_file')
                                 <div class="show error text-danger m-2">
                                     <span>
@@ -169,13 +170,70 @@
                             </div>
                         </div>
 
-                        @error('url')
-                            <div class="show error text-danger m-2">
-                                <span>
-                                    {{ $message }}
-                                </span>
+
+                        <h4 class="m-5 text-info">اطلاعات تکمیلی(اختیاری)</h4>
+
+                        <div class="form-group">
+                            <label class="form-label" for="compamiName_banner">نام تبلیغ شونده(شرکت یا شخص)</label>
+                            <div class="form-control-wrap">
+                                <input type="text" name="compani_name" class="form-control" id="compamiName_banner"
+                                    placeholder="پیشروان البرز" value="{{ old('compani_name') }}">
                             </div>
-                        @enderror
+                            @error('compani_name')
+                                <div class="show error text-danger m-2">
+                                    <span>
+                                        {{ $message }}
+                                    </span>
+                                </div>
+                            @enderror
+                        </div>
+
+
+
+
+
+                        <div class="form-group">
+                            <label class="form-label" for="price_banner">هزینه تبلیغ </label>
+                            <div class="form-control-wrap">
+                                <input type="text" name="price" class="form-control" id="price_banner"
+                                    placeholder="1میلیون تومان" value="{{ old('price') }}">
+                            </div>
+                            @error('price')
+                                <div class="show error text-danger m-2">
+                                    <span>
+                                        {{ $message }}
+                                    </span>
+                                </div>
+                            @enderror
+                        </div>
+
+
+
+
+
+                        <div class="form-group">
+                            <label class="form-label" for="statusPaid_banner">وضعیت پرداخت</label>
+                            <div class="form-control-wrap">
+                                <select name="status_paid" id="statusPaid_banner">
+                                    <option value="0" @if (old('status_paid') == 0) sekected @endif>پرداخت نشده
+                                    </option>
+                                    <option value="1" @if (old('status_paid') == 1) sekected @endif>پرداخت شده
+                                    </option>
+                                </select>
+                            </div>
+                            @error('status_paid')
+                                <div class="show error text-danger m-2">
+                                    <span>
+                                        {{ $message }}
+                                    </span>
+                                </div>
+                            @enderror
+                        </div>
+
+
+
+
+
                 </div>
 
 
@@ -244,30 +302,6 @@
                             }
                         }
                     });
-                });
-            </script>
-
-            {{-- delete  --}}
-            <script>
-                $(document).ready(function() {
-                    $(".deleteButton").click(function(e) {
-                        e.preventDefault();
-                        if (confirm("آیا مطمئن هستید که می‌خواهید این منو را حذف کنید؟")) {
-
-                            $(this).closest("form").submit();
-                        }
-                    });
-                });
-            </script>
-
-
-            <script>
-                $(window).ready(function() {
-                    $('.dropdown-menu').removeClass('*');
-
-                    $('.dropdown-menu').attr('class', 'dropdown-menu dropdown-menu-end');
-                    $('.dropdown-menu').attr('style',
-                        'dropdown-menu dropdown-menu-end');
                 });
             </script>
         @endsection

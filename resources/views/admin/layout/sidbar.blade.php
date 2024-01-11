@@ -44,53 +44,29 @@
                     </li>
                     <!-- .nk-menu-item -->
                     <li class="nk-menu-item">
-                        <a href="{{route('admin.banner.index')}}" class="nk-menu-link">
+                        <a href="{{ route('admin.banner.index') }}" class="nk-menu-link">
                             <span class="nk-menu-icon"><em class="icon ni ni-cc-alt2"></em></span>
                             <span class="nk-menu-text">بنر ها(تبلیغات)</span>
                         </a>
                     </li>
-                    <!-- .nk-menu-item -->
-                    <li class="nk-menu-item">
-                        <a href="./index-invest.html" class="nk-menu-link">
-                            <span class="nk-menu-icon"><em class="icon ni ni-coins"></em></span>
-                            <span class="nk-menu-text">داشبورد سرمایه گذاری</span>
-                        </a>
-                    </li>
-                    <!-- .nk-menu-item -->
-                    <li class="nk-menu-item">
-                        <a href="./index-crypto.html" class="nk-menu-link">
-                            <span class="nk-menu-icon"><em class="icon ni ni-bitcoin-cash"></em></span>
-                            <span class="nk-menu-text">داشبورد ارز دیجیتال</span>
-                        </a>
-                    </li>
-                    <!-- .nk-menu-item -->
-                    <li class="nk-menu-item">
-                        <a href="./index-analytics.html" class="nk-menu-link">
-                            <span class="nk-menu-icon"><em class="icon ni ni-growth"></em></span>
-                            <span class="nk-menu-text">داشبورد تجزیه و تحلیل</span>
-                        </a>
-                    </li>
+
                     <!-- .nk-menu-item -->
                     <li class="nk-menu-heading">
-                        <h6 class="overline-title text-primary-alt">اپلیکیشن ها</h6>
+                        <h6 class="overline-title text-primary-alt">محتوا</h6>
                     </li>
                     <!-- .nk-menu-heading -->
-                    <li class="nk-menu-item has-sub">
-                        <a href="#" class="nk-menu-link nk-menu-toggle">
-                            <span class="nk-menu-icon"><em class="icon ni ni-tile-thumb"></em></span>
-                            <span class="nk-menu-text">پروژه ها</span>
+                    <li class="nk-menu-item">
+                        <a href="{{ route('admin.content.category.index') }}" class="nk-menu-link">
+                            <span class="nk-menu-icon"><em class="icon ni ni-cc-alt2"></em></span>
+                            <span class="nk-menu-text">دسته بندی</span>
                         </a>
-                        <ul class="nk-menu-sub">
-                            <li class="nk-menu-item">
-                                <a href="./project-card.html" class="nk-menu-link"><span class="nk-menu-text">کارت های
-                                        پروژه</span></a>
-                            </li>
-                            <li class="nk-menu-item">
-                                <a href="./project-list.html" class="nk-menu-link"><span class="nk-menu-text">لیست پروژه
-                                        ها</span></a>
-                            </li>
-                        </ul>
-                        <!-- .nk-menu-sub -->
+                    </li>
+
+                    <li class="nk-menu-item">
+                        <a href="{{ route('admin.content.post.index') }}" class="nk-menu-link">
+                            <span class="nk-menu-icon"><em class="icon ni ni-cc-alt2"></em></span>
+                            <span class="nk-menu-text">پست (محتوا)</span>
+                        </a>
                     </li>
                     <!-- .nk-menu-item -->
                     <li class="nk-menu-item has-sub">

@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Admin\Layout;
 
+use Illuminate\Http\Request;
+use App\Models\Layout\Banner;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\Layout\BannerRequest;
+use App\Models\Layout\BannerInvoice;
 use App\Http\Services\File\FileService;
 use App\Http\Services\Image\ImageService;
-use App\Models\Banner;
-use App\Models\Priority;
 use Database\Seeders\Banner\PrioritySedder;
-use Illuminate\Http\Request;
+use App\Http\Requests\Admin\Layout\BannerRequest;
+use App\Models\Layout\BannerPriority;
 
 class BannerController extends Controller
 {
@@ -20,7 +21,7 @@ class BannerController extends Controller
     {
 
         //gnreate priority seeder
-        $priority = Priority::first();
+        $priority = BannerPriority::first();
         if ($priority === null) {
             $defult = new PrioritySedder;
             $defult->run();
@@ -38,7 +39,7 @@ class BannerController extends Controller
      */
     public function create()
     {
-        $priorities = Priority::all();
+        $priorities = BannerPriority::all();
 
         return view('admin.banner.create', compact('priorities'));
     }
@@ -46,8 +47,9 @@ class BannerController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, ImageService $imageService, FileService $fileService)
+    public function store(BannerRequest $request, ImageService $imageService, FileService $fileService)
     {
+
 
         $inputs = $request->all();
 
@@ -89,7 +91,7 @@ class BannerController extends Controller
                 if ($format == $format_image) {
 
                     //width and height image for fit and save
-                    $dimension = Priority::where('id', $request->priority_id)->first();
+                    $dimension = BannerPriority::where('id', $request->priority_id)->first();
 
                     $imageService->setExclusiveDirectory('images' . DIRECTORY_SEPARATOR . 'banners');
                     $result_image = $imageService->fitAndSave($request->file('upload_file'), $dimension->width,  $dimension->height);
@@ -119,9 +121,28 @@ class BannerController extends Controller
         if (!isset($inputs['file_show'])) {
             return redirect()->route('admin.banner.create')->withErrors(['message' => 'این فرمت فایل  برای این بخش مناسب نیست']);
         } else {
+            // dd($inputs);
 
-            $result = Banner::create($inputs);
-            if ($result) {
+            // $result_banner = Banner::create([
+            //     'file_show' => $inputs['file_show'],
+            //     'file_type' => $inputs['file_type'],
+            //     'date_statrt' => $inputs['date_start'],
+            //     'date_end' => $inputs['date_end'],
+            //     'priority_id' => $inputs['priority_id'],
+            //     'url' => $inputs['url'],
+            // ]);
+
+
+            $result_banner = Banner::create($inputs);
+
+            $inputs['banner_id'] = $result_banner->id;
+
+            $result_invoic = BannerInvoice::create($inputs);
+
+
+
+
+            if ($result_banner) {
                 //redirect id success
                 return redirect()->route('admin.banner.index');
             } else {
@@ -134,9 +155,10 @@ class BannerController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Banner $banner)
     {
-        //
+        $invoice = BannerInvoice::where('banner_id', $banner->id)->first();
+        return view('admin.banner.show',  compact('invoice', 'banner'));
     }
 
     /**
@@ -144,7 +166,7 @@ class BannerController extends Controller
      */
     public function edit(Banner $banner)
     {
-        $priorities = Priority::all();
+        $priorities = BannerPriority::all();
 
         return view('admin.banner.edit', compact('banner', 'priorities'));
     }
@@ -194,11 +216,12 @@ class BannerController extends Controller
                 if ($format == $format_image) {
 
                     //width and height image for fit and save
-                    $dimension = Priority::where('id', $request->priority_id)->first();
+                    $dimension = BannerPriority::where('id', $request->priority_id)->first();
 
                     $imageService->setExclusiveDirectory('images' . DIRECTORY_SEPARATOR . 'banners');
                     $result_image = $imageService->fitAndSave($request->file('upload_file'), $dimension->width,  $dimension->height);
                     // $result_image  =  $imageService->save($request->file('upload_file'));
+                    $imageService->deleteImage($banner->file_show);
                     $inputs['file_show'] = $result_image;
                     $inputs['file_type'] = 'image';
                 }
@@ -210,7 +233,7 @@ class BannerController extends Controller
                     $fileService->setExclusiveDirectory('file' . DIRECTORY_SEPARATOR . 'banners');
                     $fileService->setFileSize($request->file('upload_file'));
                     $resultUploadFile =  $fileService->moveToPublic($request->file('upload_file'));
-
+                    $fileService->deleteFile($banner->file_show);
                     $inputs['file_show'] = $resultUploadFile;
                     $inputs['file_type'] = 'video';
                 }
@@ -224,10 +247,16 @@ class BannerController extends Controller
 
         //error file format
         if (!isset($inputs['file_show']) && $banner->file_show == null) {
-            return redirect()->route('admin.banner.edit')->withErrors(['message' => 'این فرمت فایل  برای این بخش مناسب نیست']);
+            return redirect()->route('admin.banner.edit')->withErrors(['message' => ['این فرمت فایل  برای این بخش مناسب نیست']]);
         } else {
 
             $result = $banner->update($inputs);
+
+
+            $result_invoic = BannerInvoice::where('banner_id', $banner->id)->first();
+            $result_invoic->update($inputs);
+
+
             if ($result) {
                 //redirect id success
                 return redirect()->route('admin.banner.index');
@@ -245,7 +274,6 @@ class BannerController extends Controller
     {
         $result = $banner->delete();
 
-        // $imageService->deleteImage($banner->file);
         unlink($banner->file_show);
 
         if ($result) {

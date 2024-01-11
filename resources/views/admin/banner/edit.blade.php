@@ -1,6 +1,6 @@
 @extends('admin.layout.master')
 @section('style')
-    <title>ویرایش منو </title>
+    <title>ویرایش بنر </title>
     <link rel="stylesheet" href="{{ asset('admin_assets/jalalidatepicker/persian-datepicker.min.css') }}">
 @endsection
 @section('content')
@@ -10,15 +10,15 @@
                 <nav class="mb-3">
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">پنل مدیریت</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('admin.menu.index') }}">منو ها</a></li>
-                        <li class="breadcrumb-item active">ویرایش منو </li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.banner.index') }}">بنر ها</a></li>
+                        <li class="breadcrumb-item active">ویرایش بنر </li>
                     </ul>
                 </nav>
                 <div class="nk-block-head nk-block-head-sm">
 
                     <div class="nk-block-between">
                         <div class="nk-block-head-content">
-                            <h3 class="nk-block-title page-title">ویرایش منو شناسه: {{ $banner->id }}</h3>
+                            <h3 class="nk-block-title page-title">ویرایش بنر شناسه: {{ $banner->id }}</h3>
                         </div>
                         <!-- .nk-block-head-content -->
                         <div class="nk-block-head-content">
@@ -132,10 +132,8 @@
                                     value="{{ old('date_end', $banner->date_end) }}">
                             </div>
                             <div class="m-2">
-                                {{-- {{ dd($banner->date_end == null ? 'hello' : ' ') }} --}}
 
-                                <label for="end_date_status" 
-                                    onclick="change_status_endDate()">فعلا به صورت دائم نمایش داده
+                                <label for="end_date_status" onclick="change_status_endDate()">فعلا به صورت دائم نمایش داده
                                     شود</label>
                                 <input type="checkbox" id="end_date_status" onclick="change_status_endDate()"
                                     name="status_end_date" {{ $banner->date_end == null ? 'checked="checked"' : ' ' }}>
@@ -179,7 +177,8 @@
 
                                 @if ($priority_count_full == $priorities->count())
                                     <div class="empty_error text-danger m-4">
-                                        <span>مکانی برای قرار دادن این بنر بر روی سایت موجود نیست</span>
+                                        <span> مکانی برای قرار دادن این بنر بر روی سایت موجود نیست(مکان قبلی ثبت خواهد
+                                            شد)</span>
                                     </div>
                                     {{-- if $error > 0 button submit disabled --}}
                                     @php
@@ -192,22 +191,87 @@
                                     </div>
                                 @endif
 
-                                {{-- {{dd($priorities->count())}} --}}
-
                             </div>
+
+                            @error('priority_id')
+                                <div class="show error text-danger m-2">
+                                    <span>
+                                        {{ $message }}
+                                    </span>
+                                </div>
+                            @enderror
                         </div>
 
-                        @error('url')
-                            <div class="show error text-danger m-2">
-                                <span>
-                                    {{ $message }}
-                                </span>
+
+
+
+                        <h4 class="m-5 text-info">اطلاعات تکمیلی(اختیاری)</h4>
+
+                        <div class="form-group">
+                            <label class="form-label" for="compamiName_banner">نام تبلیغ شونده(شرکت یا شخص)</label>
+                            <div class="form-control-wrap">
+                                <input type="text" name="compani_name" class="form-control" id="compamiName_banner"
+                                    placeholder="پیشروان البرز"
+                                    value="{{ old('compani_name', $banner->invoice->compani_name) }}">
                             </div>
-                        @enderror
+                            @error('compani_name')
+                                <div class="show error text-danger m-2">
+                                    <span>
+                                        {{ $message }}
+                                    </span>
+                                </div>
+                            @enderror
+                        </div>
+
+
+
+
+
+                        <div class="form-group">
+                            <label class="form-label" for="price_banner">هزینه تبلیغ </label>
+                            <div class="form-control-wrap">
+                                <input type="text" name="price" class="form-control" id="price_banner"
+                                    placeholder="1میلیون تومان" value="{{ old('price', $banner->invoice->price) }}">
+                            </div>
+                            @error('price')
+                                <div class="show error text-danger m-2">
+                                    <span>
+                                        {{ $message }}
+                                    </span>
+                                </div>
+                            @enderror
+                        </div>
+
+
+
+
+
+                        <div class="form-group">
+                            <label class="form-label" for="statusPaid_banner">وضعیت پرداخت</label>
+                            <div class="form-control-wrap">
+                                <select name="status_paid" id="statusPaid_banner">
+                                    <option value="0" @if (old('status_paid', $banner->invoice->status_paid) == 0) sekected @endif>پرداخت نشده
+                                    </option>
+                                    <option value="1" @if (old('status_paid', $banner->invoice->status_paid) == 1) sekected @endif>پرداخت شده
+                                    </option>
+                                </select>
+                            </div>
+                            @error('status_paid')
+                                <div class="show error text-danger m-2">
+                                    <span>
+                                        {{ $message }}
+                                    </span>
+                                </div>
+                            @enderror
+                        </div>
+
+                        {{-- {{ dd($errors) }} --}}
+
+
                 </div>
 
 
-                <button class="btn btn-success m-3  {{ $error > 0 ? 'disabled' : '' }}">ثبت</button>
+                <button class="btn btn-success m-3 ">ثبت</button>
 
                 </form>
             </div>
@@ -272,30 +336,6 @@
                             }
                         }
                     });
-                });
-            </script>
-
-            {{-- delete  --}}
-            <script>
-                $(document).ready(function() {
-                    $(".deleteButton").click(function(e) {
-                        e.preventDefault();
-                        if (confirm("آیا مطمئن هستید که می‌خواهید این منو را حذف کنید؟")) {
-
-                            $(this).closest("form").submit();
-                        }
-                    });
-                });
-            </script>
-
-
-            <script>
-                $(window).ready(function() {
-                    $('.dropdown-menu').removeClass('*');
-
-                    $('.dropdown-menu').attr('class', 'dropdown-menu dropdown-menu-end');
-                    $('.dropdown-menu').attr('style',
-                        'dropdown-menu dropdown-menu-end');
                 });
             </script>
         @endsection

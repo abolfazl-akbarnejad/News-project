@@ -45,7 +45,7 @@ class PrioritySedder extends Seeder
         ];
 
         for ($i = 0; $i < $priorities_name; $i++) {
-            DB::table('priories_banner')->insert([
+            DB::table('banner_priories')->insert([
                 'name' => $priorities_name[$i],
                 'number' => $priorities_number[$i],
                 'type' => $priorities_type[$i],

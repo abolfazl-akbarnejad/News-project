@@ -44,7 +44,7 @@
 
 
                 <div class="form create">
-                    <form action="{{ route('admin.menu.update' , $menu->id) }}" method="POST">
+                    <form action="{{ route('admin.menu.update', $menu->id) }}" method="POST">
                         @csrf
                         @method('put')
 
@@ -52,7 +52,7 @@
                             <label class="form-label" for="name_menu">نام منو</label>
                             <div class="form-control-wrap">
                                 <input type="text" class="form-control" name="name" id="name_menu-01"
-                                    placeholder="سلامت" value="{{ old('name' , $menu->name) }}">
+                                    placeholder="سلامت" value="{{ old('name', $menu->name) }}">
                             </div>
                             @error('name')
                                 <div class="show error text-danger m-2">
@@ -69,7 +69,7 @@
                             <label class="form-label" for="url_menu">ادرس صفحه</label>
                             <div class="form-control-wrap">
                                 <input type="text" name="url" class="form-control" id="url_menu"
-                                    placeholder="http://google.com/" value="{{ old('url' , $menu->url) }}">
+                                    placeholder="http://google.com/" value="{{ old('url', $menu->url) }}">
                             </div>
                             @error('url')
                                 <div class="show error text-danger m-2">
@@ -89,7 +89,7 @@
                                     <option value="defult_option">اصلی</option>
                                     @foreach ($menus as $parent_menu)
                                         <option value="{{ $parent_menu->id }}"
-                                            @if (old('parent_id' , $menu->parent_id) == $parent_menu->id) selected @endif>
+                                            @if (old('parent_id', $menu->parent_id) == $parent_menu->id) selected @endif>
 
                                             {{ $parent_menu->name }}
                                         </option>
@@ -109,33 +109,4 @@
 
                     </form>
                 </div>
-            @endsection
-            {{-- alerts --}}
-            @section('script')
-                @include('admin.alerts.defult_alert.suucess')
-
-
-                {{-- delete  --}}
-                <script>
-                    $(document).ready(function() {
-                        $(".deleteButton").click(function(e) {
-                            e.preventDefault();
-                            if (confirm("آیا مطمئن هستید که می‌خواهید این منو را حذف کنید؟")) {
-
-                                $(this).closest("form").submit();
-                            }
-                        });
-                    });
-                </script>
-
-
-                <script>
-                    $(window).ready(function() {
-                        $('.dropdown-menu').removeClass('*');
-
-                        $('.dropdown-menu').attr('class', 'dropdown-menu dropdown-menu-end');
-                        $('.dropdown-menu').attr('style',
-                            'dropdown-menu dropdown-menu-end');
-                    });
-                </script>
             @endsection
