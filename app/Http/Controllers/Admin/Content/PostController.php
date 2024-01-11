@@ -61,6 +61,17 @@ class PostController extends Controller
         }
     }
 
+
+    public function fetch_categories()
+    {
+
+        $categories = PostCategory::orderBy('created_at')->get();
+
+        return response()->json([
+            'data' => $categories,
+        ]);
+    }
+
     /**
      * Display the specified resource.
      */

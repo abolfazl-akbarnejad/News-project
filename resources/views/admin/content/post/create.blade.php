@@ -256,10 +256,12 @@
                                 <label class="form-label" for="category_option_post"> انتخاب دسته بندی</label>
                                 <div class="form-control-wrap">
                                     @if ($categories->count() != 0)
-                                        <select name="category_id" id="category_option_post">
+                                        <select name="category_id" id="category_option_post"
+                                            onclick="fetch_categories()">
                                             @foreach ($categories as $category)
                                                 <option value="{{ $category->id }}"
-                                                    @if (old('category_id') == 0) selected @endif>{{ $category->name }}
+                                                    @if (old('category_id') == 0) selected @endif
+                                                    class="category_option">{{ $category->name }}
                                                 </option>
                                             @endforeach
 
@@ -333,6 +335,62 @@
             <script src="{{ asset('admin_assets/select2/js/select2.min.js') }}"></script>
             <script src="{{ asset('admin_assets/jalalidatepicker/persian-date.min.js') }}"></script>
             <script src="{{ asset('admin_assets/jalalidatepicker/persian-datepicker.min.js') }}"></script>
+
+
+            <script>
+                function fetch_categories() {
+
+                    var url = "{{ route('admin.content.post.fetch_categories') }}";
+                    // $('#category_option_post').empty();
+                    $('#category_option_post').empty(); // حذف تمام گزینه‌های فعلی
+
+                    $.ajax({
+                        type: "GET",
+                        url: url,
+                        dataType: "json",
+                        success: function(response) {
+                            var len = response['data'].length;
+                            var data = response['data'];
+
+                            // if (len != null) {
+                            //     for (let i = 0; i < len; i++) {
+                            //         console.log(data[i]['name']);
+                            //         var str_value = " <option value = '" + data[i]['id'] + "'" +
+
+                            //             "@if (old('category_id') == 0) selected @endif    class='category_option'>" +
+                            //             data[i]['name'] +
+                            //             "</option >"
+                            //         $('.category_option').remove();
+
+
+
+
+                            //         $('.category_option').append(str_value);
+
+                            //     }
+                            // }
+
+
+                            if (len != null) {
+                                var optionsHTML = ""; // استفاده از متغیر برای ذخیره HTML گزینه‌ها
+
+                                for (let i = 0; i < len; i++) {
+                                    console.log(data[i]['name']);
+                                    var str_value = "<option value='" + data[i]['id'] + "'" +
+                                        "@if (old('category_id') == 0) selected @endif class='category_option'>" +
+                                        data[i]['name'] +
+                                        "</option>";
+                                    optionsHTML += str_value; // اضافه کردن هر گزینه به HTML متغیر
+
+                                }
+
+                                $('#category_option_post').append(optionsHTML); // اضافه کردن تمام گزینه‌ها به یکباره
+                            }
+
+                        }
+                    });
+                }
+            </script>
 
             <script>
                 $(document).ready(function() {

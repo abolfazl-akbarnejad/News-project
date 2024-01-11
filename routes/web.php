@@ -55,13 +55,14 @@ Route::prefix('admin')->group(function () {
         Route::get('/category/edit/{category:slug}', [PostCategoryController::class, 'edit'])->name('admin.content.category.edit');
         Route::put('/category/update/{category:slug}', [PostCategoryController::class, 'update'])->name('admin.content.category.update');
 
-          //post
-          Route::get('/', [PostController::class, 'index'])->name('admin.content.post.index');
-          Route::get('/create', [PostController::class, 'create'])->name('admin.content.post.create');
-          Route::post('/store', [PostController::class, 'store'])->name('admin.content.post.store');
-          Route::get('/show/{post:slug}', [PostController::class, 'show'])->name('admin.content.post.show');
-          Route::delete('/delete/{post:slug}', [PostController::class, 'destroy'])->name('admin.content.post.destroy');
-          Route::get('/edit/{post:slug}', [PostController::class, 'edit'])->name('admin.content.post.edit');
-          Route::put('/update/{post:slug}', [PostController::class, 'update'])->name('admin.content.post.update');
+        //post
+        Route::get('/', [PostController::class, 'index'])->name('admin.content.post.index');
+        Route::get('/create', [PostController::class, 'create'])->name('admin.content.post.create');
+        Route::post('/store', [PostController::class, 'store'])->name('admin.content.post.store');
+        Route::get('/show/{post:slug}', [PostController::class, 'show'])->name('admin.content.post.show');
+        Route::delete('/delete/{post:slug}', [PostController::class, 'destroy'])->name('admin.content.post.destroy');
+        Route::get('/edit/{post:slug}', [PostController::class, 'edit'])->name('admin.content.post.edit');
+        Route::put('/update/{post:slug}', [PostController::class, 'update'])->name('admin.content.post.update');
+        Route::get('/fetch_categories', [PostController::class, 'fetch_categories'])->name('admin.content.post.fetch_categories');
     });
 });
