@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\Content\PostRequest;
 use App\Http\Services\Image\ImageService;
 use App\Models\Content\Post;
 use App\Models\Content\PostCategory;
+use App\Models\Content\PostFile;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -47,12 +48,19 @@ class PostController extends Controller
         if ($request->hasFile('image')) {
             $imageService->setExclusiveDirectory('images' . DIRECTORY_SEPARATOR . 'post');
             $result_image =  $imageService->fitAndSave($request->file('image'), 730, 450);
+
+            $inputs['type'] = 'image';
             $inputs['image'] = $result_image;
         }
-
         //temporary for outhor_id
         $inputs['author_id'] = 1;
         $result = Post::create($inputs);
+        $save_image  =  PostFile::create([
+            'type' => $inputs['type'],
+            'alt_text' => $inputs['alt_image'],
+            'post_id' => $result->id,
+            'path' => $inputs['image'],
+        ]);
 
         if ($result) {
             return redirect()->route('admin.content.post.index')->with('success', 'پست با موفقیت ثبت شد');
@@ -83,9 +91,10 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Post $post)
     {
-        //
+        dd($post);
+        return view('admin.content.post.edit', compact('post'));
     }
 
     /**

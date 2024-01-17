@@ -27,7 +27,7 @@ class PostRequest extends FormRequest
 
             return [
                 'title' => 'required|regex:/^[a-zA-Z0-9آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی‌,،:\/\-\+;\s]*$/',
-                'title_mini' => 'required|min:3|max:110|regex:/^[a-zA-Z0-9آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی‌,،:\/\-\+;\s]*$/',
+                // 'title_mini' => 'required|min:3|max:110|regex:/^[a-zA-Z0-9آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی‌,،:\/\-\+;\s]*$/',
                 'alt_image' => 'min:2|max:120',
                 'image' => 'required|mimes:png,jpg,jpeg,gif',
                 'published_at' => [
@@ -51,7 +51,7 @@ class PostRequest extends FormRequest
         } else {
             return [
                 'title' => 'required|regex:/^[a-zA-Z0-9آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی‌,،:\/\-\+;\s]*$/',
-                'title_mini' => 'required|min:3|max:110|regex:/^[a-zA-Z0-9آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی‌,،:\/\-\+;\s]*$/',
+                // 'title_mini' => 'required|min:3|max:110|regex:/^[a-zA-Z0-9آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی‌,،:\/\-\+;\s]*$/',
                 'alt_image' => 'min:2|max:120',
                 'image' => 'mimes:png,jpg,jpeg,gif',
                 'published_at' => [

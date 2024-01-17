@@ -91,7 +91,8 @@
                                 <td> {{ $post->id }} </td>
                                 <td> {{ $post->title }} </td>
 
-                                <td><img src="{{ asset($post->image) }}" alt="image title post"></td>
+                                <td><img src="{{ asset($post->image) }}"
+                                        alt="{{ $post->post_file->alt_text ?? 'تصویری دریافت نشد' }}"></td>
                                 <td>{{ jalaliDate($post->created_at) ?? 'یافت نشد' }} /
                                     {{ jalaliDate($post->published_at) ?? 'یافت نشد' }}
                                 </td>

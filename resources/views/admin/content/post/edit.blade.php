@@ -1,6 +1,6 @@
 @extends('admin.layout.master')
 @section('style')
-    <title>ساخت پست جدید</title>
+    <title>ویرایش پست </title>
     <link rel="stylesheet" href="{{ asset('admin_assets/jalalidatepicker/persian-datepicker.min.css') }}">
     <link rel="stylesheet" href="{{ asset('admin_assets/select2/css/select2.min.css') }}">
 
@@ -93,7 +93,7 @@
 
 
                         <div class="row">
-                            <div class="form-group ">
+                            <div class="form-group col-6">
                                 <label class="form-label" for="title_post"> تایتل پست</label>
                                 <div class="form-control-wrap">
                                     <input type="text" name="title" class="form-control" id="title_post"
@@ -110,7 +110,7 @@
                             </div>
 
 
-                            {{-- <div class="form-group col-6">
+                            <div class="form-group col-6">
                                 <label class="form-label" for="title_post_mini"> تایتل بهینه شده</label>
                                 <em class="icon ni ni-info info-title-mini"></em>
 
@@ -127,7 +127,7 @@
                                         </span>
                                     </div>
                                 @enderror
-                            </div> --}}
+                            </div>
 
 
 
