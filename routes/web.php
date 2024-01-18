@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\Content\CommentController;
 use Illuminate\Support\Facades\Route;
 // use App\Http\Controllers\Admin\Content\PostController;
 use App\Http\Controllers\Admin\HomeController;
@@ -65,4 +66,16 @@ Route::prefix('admin')->group(function () {
         Route::put('/update/{post:slug}', [PostController::class, 'update'])->name('admin.content.post.update');
         Route::get('/fetch_categories', [PostController::class, 'fetch_categories'])->name('admin.content.post.fetch_categories');
     });
+
+
+    //comment
+    Route::get('/comment', [CommentController::class, 'index'])->name('admin.content.comment.index');
+    Route::get('/comment/unseen', [CommentController::class, 'unseen'])->name('admin.content.comment.unseen');
+    Route::get('/comment/create', [CommentController::class, 'create'])->name('admin.content.comment.create');
+    Route::post('/comment/store', [CommentController::class, 'store'])->name('admin.content.comment.store');
+    Route::get('/comment/show/{comment}', [CommentController::class, 'show'])->name('admin.content.comment.show');
+    Route::get('/comment/approved/{comment}', [CommentController::class, 'approved'])->name('admin.content.comment.approved');
+    Route::get('/comment/edit/{comment}', [CommentController::class, 'edit'])->name('admin.content.comment.edit');
+    Route::put('/comment/update/{comment}', [CommentController::class, 'update'])->name('admin.content.comment.update');
+    Route::delete('/comment/delete/{comment}', [CommentController::class, 'destroy'])->name('admin.content.comment.destroy');
 });

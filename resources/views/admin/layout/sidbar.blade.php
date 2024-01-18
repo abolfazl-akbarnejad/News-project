@@ -72,29 +72,20 @@
                     <li class="nk-menu-item has-sub">
                         <a href="#" class="nk-menu-link nk-menu-toggle">
                             <span class="nk-menu-icon"><em class="icon ni ni-users"></em></span>
-                            <span class="nk-menu-text">مدیریت کاربران</span>
+                            <span class="nk-menu-text">مدیریت نظرات</span>
                         </a>
                         <ul class="nk-menu-sub">
                             <li class="nk-menu-item">
-                                <a href="./user-list-regular.html" class="nk-menu-link"><span class="nk-menu-text">لیست
-                                        کاربران - عادی</span></a>
+                                <a href="{{ route('admin.content.comment.index') }}" class="nk-menu-link"><span
+                                        class="nk-menu-text">لیست
+                                        نظرات </span></a>
                             </li>
                             <li class="nk-menu-item">
-                                <a href="./user-list-compact.html" class="nk-menu-link"><span class="nk-menu-text">لیست
-                                        کاربران - فشرده</span></a>
+                                <a href="{{ route('admin.content.comment.unseen') }}" class="nk-menu-link"><span
+                                        class="nk-menu-text">لیست
+                                        نطرات دیده نشده</span></a>
                             </li>
-                            <li class="nk-menu-item">
-                                <a href="./user-details-regular.html" class="nk-menu-link"><span
-                                        class="nk-menu-text">مشخصات کاربر - عادی</span></a>
-                            </li>
-                            <li class="nk-menu-item">
-                                <a href="./user-profile-regular.html" class="nk-menu-link"><span
-                                        class="nk-menu-text">پروفایل کاربر - عادی</span></a>
-                            </li>
-                            <li class="nk-menu-item">
-                                <a href="./user-card.html" class="nk-menu-link"><span class="nk-menu-text">تماس با
-                                        کاربر - کارت</span></a>
-                            </li>
+
                         </ul>
                         <!-- .nk-menu-sub -->
                     </li>
@@ -110,8 +101,8 @@
                                         مشتریان</span></a>
                             </li>
                             <li class="nk-menu-item">
-                                <a href="./customer-details.html" class="nk-menu-link"><span
-                                        class="nk-menu-text">مشخصات مشتری</span></a>
+                                <a href="./customer-details.html" class="nk-menu-link"><span class="nk-menu-text">مشخصات
+                                        مشتری</span></a>
                             </li>
                         </ul>
                         <!-- .nk-menu-sub -->
