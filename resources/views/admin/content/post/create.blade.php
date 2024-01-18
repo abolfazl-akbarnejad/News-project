@@ -71,7 +71,7 @@
 
                                         <li class="nk-block-tools-opt">
 
-                                            <a href="{{ route('admin.menu.index') }}" class=" btn btn-primary"><em
+                                            <a href="{{ route('admin.content.post.index') }}" class=" btn btn-primary"><em
                                                     class="icon ni ni-plus"></em><span>برگشت</span></a>
                                         </li>
                                     </ul>
@@ -257,7 +257,7 @@
                                 <div class="form-control-wrap">
                                     @if ($categories->count() != 0)
                                         <select name="category_id" id="category_option_post"
-                                            onclick="fetch_categories()">
+                                     >
                                             @foreach ($categories as $category)
                                                 <option value="{{ $category->id }}"
                                                     @if (old('category_id') == 0) selected @endif
@@ -356,7 +356,6 @@
                                 var optionsHTML = ""; // استفاده از متغیر برای ذخیره HTML گزینه‌ها
 
                                 for (let i = 0; i < len; i++) {
-                                    console.log(data[i]['name']);
                                     var str_value = "<option value='" + data[i]['id'] + "'" +
                                         "@if (old('category_id') == 0) selected @endif class='category_option'>" +
                                         data[i]['name'] +
@@ -396,7 +395,6 @@
             <script>
                 $(".info-title-mini").hover(
                     function() {
-                        console.log('hi');
                         // هنگامی که هوور شروع می‌شود
                         $(".hover-text").show();
                     },
@@ -410,7 +408,6 @@
 
                 $(".info-alt-image").hover(
                     function() {
-                        console.log('hi');
                         // هنگامی که هوور شروع می‌شود
                         $(".hover-text2").show();
                     },

@@ -44,7 +44,7 @@
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">پنل مدیریت</a></li>
                         <li class="breadcrumb-item"><a href="{{ route('admin.content.post.index') }}">پست ها</a></li>
-                        <li class="breadcrumb-item active">ساخت پست جدید</li>
+                        <li class="breadcrumb-item active">ویرایش پست {{ $post->title }}</li>
                     </ul>
                 </nav>
                 <div class="nk-block-head nk-block-head-sm">
@@ -71,7 +71,7 @@
 
                                         <li class="nk-block-tools-opt">
 
-                                            <a href="{{ route('admin.menu.index') }}" class=" btn btn-primary"><em
+                                            <a href="{{ route('admin.content.post.index') }}" class=" btn btn-primary"><em
                                                     class="icon ni ni-plus"></em><span>برگشت</span></a>
                                         </li>
                                     </ul>
@@ -87,18 +87,18 @@
 
 
                 <div class="form create">
-                    <form action="{{ route('admin.content.post.store') }}" method="POST" enctype="multipart/form-data"
-                        id="form">
+                    <form action="{{ route('admin.content.post.update', $post->slug) }}" method="POST"
+                        enctype="multipart/form-data" id="form">
                         @csrf
-
+                        @method('PUT')
 
                         <div class="row">
-                            <div class="form-group col-6">
+                            <div class="form-group ">
                                 <label class="form-label" for="title_post"> تایتل پست</label>
                                 <div class="form-control-wrap">
                                     <input type="text" name="title" class="form-control" id="title_post"
                                         placeholder=" مثال:ادعا ترکیه به بمب گزاری در شهر بزرس سوریه"
-                                        value="{{ old('title') }}">
+                                        value="{{ old('title', $post->title) }}">
                                 </div>
                                 @error('title')
                                     <div class="show error text-danger m-2">
@@ -110,7 +110,7 @@
                             </div>
 
 
-                            <div class="form-group col-6">
+                            {{-- <div class="form-group col-6">
                                 <label class="form-label" for="title_post_mini"> تایتل بهینه شده</label>
                                 <em class="icon ni ni-info info-title-mini"></em>
 
@@ -127,7 +127,7 @@
                                         </span>
                                     </div>
                                 @enderror
-                            </div>
+                            </div> --}}
 
 
 
@@ -154,7 +154,8 @@
 
                                 <div class="form-control-wrap optimized-title">
                                     <input type="text" name="alt_image" class="form-control" id="alt_post_image"
-                                        placeholder="مثال: عکسی از یک آهو" value="{{ old('alt_image') }}">
+                                        placeholder="مثال: عکسی از یک آهو"
+                                        value="{{ old('alt_image', $post->post_file->alt_text ?? '') }}">
                                     <span class="hover-text2">این بخش باید متن هم موضوع عکسی که وارد کردید باشد(در سئو سایت
                                         بسیار موثر است)
                                     </span>
@@ -173,9 +174,10 @@
                                 <label class="form-label" form="published_at_view">زمان نمایش بر روی سایت</label>
                                 <div class="form-control-wrap">
                                     <input type="text" id="published_at" style="display:none " name="published_at"
-                                        class="form-control pull-right hidden" value="{{ old('published_at') }}">
+                                        class="form-control pull-right hidden"
+                                        value="{{ old('published_at', $post->published_at) }}">
                                     <input type="text" id="published_at_view" class="form-control pull-right "
-                                        value="{{ old('published_at') }}">
+                                        value="{{ old('published_at', $post->published_at) }}">
                                 </div>
                                 @error('published_at')
                                     <div class="show error text-danger m-2">
@@ -195,9 +197,9 @@
                                 <div class="form-control-wrap">
 
                                     <select name="status" id="post_status">
-                                        <option value="0" @if (old('status') == 0) selected @endif>غیر فعال
+                                        <option value="0" @if (old('status', $post->status) == 0) selected @endif>غیر فعال
                                         </option>
-                                        <option value="1" @if (old('status') == 1) selected @endif>فعال
+                                        <option value="1" @if (old('status', $post->status) == 1) selected @endif>فعال
                                         </option>
                                     </select>
                                 </div>
@@ -217,9 +219,9 @@
                                 <div class="form-control-wrap">
 
                                     <select name="commentable" id="commentable_status">
-                                        <option value="0" @if (old('commentable') == 0) selected @endif>غیر فعال
+                                        <option value="0" @if (old('commentable', $post->commentable) == 0) selected @endif>غیر فعال
                                         </option>
-                                        <option value="1" @if (old('commentable') == 1) selected @endif>فعال
+                                        <option value="1" @if (old('commentable', $post->commentable) == 1) selected @endif>فعال
                                         </option>
                                     </select>
                                 </div>
@@ -237,7 +239,7 @@
                                 <div class="form-group">
                                     <label for="tags">تگ ها</label>
                                     <input type="hidden" class="form-control form-control-sm" name="tags"
-                                        id="tags" value="{{ old('tags') }}">
+                                        id="tags" value="{{ old('tags', $post->tags) }}">
                                     <select class="select2 form-control form-control-sm" id="select_tags" multiple>
 
                                     </select>
@@ -256,11 +258,10 @@
                                 <label class="form-label" for="category_option_post"> انتخاب دسته بندی</label>
                                 <div class="form-control-wrap">
                                     @if ($categories->count() != 0)
-                                        <select name="category_id" id="category_option_post"
-                                            onclick="fetch_categories()">
+                                        <select name="category_id" id="category_option_post" onblur="fetch_categories()">
                                             @foreach ($categories as $category)
                                                 <option value="{{ $category->id }}"
-                                                    @if (old('category_id') == 0) selected @endif
+                                                    @if (old('category_id', $post->category_id) == 0) selected @endif
                                                     class="category_option">{{ $category->name }}
                                                 </option>
                                             @endforeach
@@ -268,7 +269,7 @@
                                         </select>
                                     @else
                                         <span class="text-danger"> ابتدا باید یک دسته بندی <a
-                                                href="{{ route('admin.content.category.create') }}"
+                                                href="{{ route('admin.content.category.create', $post->slug) }}"
                                                 target="_blank">بسازید</a></span>
                                     @endif
 
@@ -290,7 +291,7 @@
 
                                 <div class="form-control-wrap optimized-title">
 
-                                    <textarea name="summary" id="summary_post">{{ old('summary') }}</textarea>
+                                    <textarea name="summary" id="summary_post">{{ old('summary', $post->summary) }}</textarea>
 
                                 </div>
                                 @error('summary')
@@ -308,7 +309,7 @@
 
                                 <div class="form-control-wrap optimized-title">
 
-                                    <textarea name="body" id="body_post">{{ old('body') }}</textarea>
+                                    <textarea name="body" id="body_post">{{ old('body', $post->body) }}</textarea>
 
                                 </div>
                                 @error('body')
@@ -339,7 +340,6 @@
 
             <script>
                 function fetch_categories() {
-
                     var url = "{{ route('admin.content.post.fetch_categories') }}";
                     // $('#category_option_post').empty();
                     $('#category_option_post').empty(); // حذف تمام گزینه‌های فعلی
@@ -356,9 +356,8 @@
                                 var optionsHTML = ""; // استفاده از متغیر برای ذخیره HTML گزینه‌ها
 
                                 for (let i = 0; i < len; i++) {
-                                    console.log(data[i]['name']);
                                     var str_value = "<option value='" + data[i]['id'] + "'" +
-                                        "@if (old('category_id') == 0) selected @endif class='category_option'>" +
+                                        "@if (old('category_id', $post->category_id) == 0) selected @endif class='category_option'>" +
                                         data[i]['name'] +
                                         "</option>";
                                     optionsHTML += str_value; // اضافه کردن هر گزینه به HTML متغیر
@@ -396,7 +395,6 @@
             <script>
                 $(".info-title-mini").hover(
                     function() {
-                        console.log('hi');
                         // هنگامی که هوور شروع می‌شود
                         $(".hover-text").show();
                     },
@@ -410,7 +408,6 @@
 
                 $(".info-alt-image").hover(
                     function() {
-                        console.log('hi');
                         // هنگامی که هوور شروع می‌شود
                         $(".hover-text2").show();
                     },

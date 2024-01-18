@@ -9,6 +9,8 @@ use App\Models\Content\Post;
 use App\Models\Content\PostCategory;
 use App\Models\Content\PostFile;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rules\Exists;
+use PHPUnit\Framework\Constraint\FileExists;
 
 class PostController extends Controller
 {
@@ -93,23 +95,65 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        dd($post);
-        return view('admin.content.post.edit', compact('post'));
+        $categories =  PostCategory::all();
+
+        return view('admin.content.post.edit', compact('post', 'categories'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Post $post, ImageService $imageService)
     {
-        //
+        $inputs = $request->all();
+        $inputs['type'] = null;
+        //for time published_at
+        $realetimestampStart = intval(substr($request->published_at, 0, 10));
+        $inputs['published_at'] = date('Y-m-d H:i:s', $realetimestampStart);
+
+
+
+
+        //for title image
+        if ($request->hasFile('image')) {
+            $imageService->setExclusiveDirectory('images' . DIRECTORY_SEPARATOR . 'post');
+            $result_image =  $imageService->fitAndSave($request->file('image'), 730, 450);
+            if (file_exists($post->image)) {
+                unlink($post->image);
+            }
+            $inputs['type'] = 'image';
+            $inputs['image'] = $result_image;
+        }
+        //temporary for outhor_id
+        $inputs['author_id'] = 1;
+        $result = $post->update($inputs);
+        $save_image  =  PostFile::where('post_id', $post->id)->update([
+            'type' => $inputs['type'],
+            'alt_text' => $inputs['alt_image'],
+            'path' => $inputs['image'] ?? $post->image,
+        ]);
+
+        if ($result) {
+            return redirect()->route('admin.content.post.index')->with('success', 'پست با موفقیت ثبت شد');
+        } else {
+            return redirect()->route('admin.content.post.index')->with('error', 'مطلب ثبت نشد');
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Post $post)
     {
-        //
+        $result = $post->delete();
+        $database_file_post = $post->post_file()->delete();
+
+        delete_file($post->image);
+
+        if ($post) {
+            return redirect()->route('admin.content.post.index')->with('success', 'اطلاعات با موفقیت حذف شد');
+        } else {
+            return redirect()->route('admin.content.post.index');
+        }
     }
 }

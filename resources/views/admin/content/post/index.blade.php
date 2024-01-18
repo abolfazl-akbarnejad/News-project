@@ -118,16 +118,16 @@
                                                             <ul class="link-list-opt no-bdr">
                                                                 <li>
                                                                     <a
-                                                                        href="{{ route('admin.content.post.edit', $post->id) }}"><em
+                                                                        href="{{ route('admin.content.post.edit', $post->slug) }}"><em
                                                                             class="icon ni ni-edit"></em><span>ویرایش
                                                                             پست</span></a>
                                                                 </li>
-                                                                <li>
+                                                                {{-- <li>
                                                                     <a
-                                                                        href="{{ route('admin.content.post.show', $post->id) }}"><em
+                                                                        href="{{ route('admin.content.post.show', $post->slug) }}"><em
                                                                             class="icon ni ni-eye"></em><span>مشاهده
                                                                             پست</span></a>
-                                                                </li>
+                                                                </li> --}}
                                                                 <li>
                                                                     <a href="#"><em
                                                                             class="icon ni ni-activity-round"></em><span>سفارشات
@@ -136,7 +136,7 @@
                                                                 <li>
 
                                                                     <form
-                                                                        action="{{ route('admin.content.post.destroy', $post->id) }}"
+                                                                        action="{{ route('admin.content.post.destroy', $post->slug) }}"
                                                                         method="POST" class="deleteForm">
                                                                         @csrf
                                                                         @method('DELETE')

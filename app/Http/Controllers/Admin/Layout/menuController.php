@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin\Layout;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Layout\MenuRequest;
-use App\Models\Menu;
+use App\Models\Layout\Menu;
 use Illuminate\Http\Request;
 
 class menuController extends Controller
